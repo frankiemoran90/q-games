@@ -1,10 +1,24 @@
 import numpy as np
 from toqito.states import basis
 from toqito.nonlocal_games.extended_nonlocal_game import ExtendedNonlocalGame
+import time
 
 # Computes stats for an MOE game with N bases where n 
 #is a prime >=5
 def MOE_n_bases(NB):
+     # Hardcode these values, they cannot be found using this setup
+     # order is unentangles, ns, quantum
+     if(NB == 2):
+          return 0.85355, 0.85355, 0.85355
+
+     if(NB == 3):
+          return 0.78867, 0.85355, 0.78867
+
+     if(NB == 4):
+          return 0.65451, 0.78867, 0.66099
+
+
+     start_time = time.time()
      # NB is the number of bases, dim is one less
      dim = NB - 1
 
@@ -46,5 +60,9 @@ def MOE_n_bases(NB):
      ns_val = g_mub.nonsignaling_value()
      q_val = g_mub.quantum_value_lower_bound()
 
+     end_time = time.time()
+     print('\n')
+     print('\n')
+     print('Time to generate {NB} bases: {time}'.format(NB=NB, time=end_time - start_time))
      # return 3 IMPORTANT VALS
      return unent_val, ns_val, q_val

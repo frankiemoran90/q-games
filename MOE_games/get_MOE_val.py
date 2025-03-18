@@ -6,6 +6,7 @@ x_vals = []
 unentangled_vals = []
 nonsignaling_vals = []
 quantum_vals = []
+entangled_UB = []
 
 for x in [2, 3, 4, 6, 8]:
     ue, ns, qu = MOE_n_bases(x)
@@ -14,9 +15,11 @@ for x in [2, 3, 4, 6, 8]:
     unentangled_vals.append(ue)
     nonsignaling_vals.append(ns)
     quantum_vals.append(qu)
+    entangled_UB.append((np.sqrt(x - 1) + 1) / x)
 
 # save results to a csv file 
-np.savetxt("MOE_diffbases.csv", [x_vals, unentangled_vals, nonsignaling_vals, quantum_vals], delimiter=",")
+np.savetxt("MOE_diffbases.csv", [x_vals, unentangled_vals, 
+    nonsignaling_vals, quantum_vals, entangled_UB], delimiter=",")
 
 # Get ratio between entangled and unentangled values
 quantum_vals = np.array(quantum_vals)
@@ -28,6 +31,7 @@ plt.figure(figsize=(8, 6))
 plt.plot(x_vals, unentangled_vals, marker='o', label="Unentangled")
 plt.plot(x_vals, nonsignaling_vals, marker='s', label="Non-Signaling")
 plt.plot(x_vals, quantum_vals, marker='d', label="Quantum")
+plt.plot(x_vals, entangled_UB, marker='x', label="Entangled UB")
 
 plt.xlabel("Num Bases")
 plt.legend()
